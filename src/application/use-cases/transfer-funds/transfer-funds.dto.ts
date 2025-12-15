@@ -7,6 +7,9 @@ export class TransferFundsDto {
   @IsString()
   toWalletId: string;
 
+  @IsString()
+  description: string;
+
   @IsNumber()
   @IsPositive()
   amount: number;
@@ -27,6 +30,7 @@ export class TransferFundsResultDto {
     public readonly fromWalletId: string,
     public readonly toWalletId: string,
     public readonly amount: number,
+    public readonly description: string,
     public readonly fromBalanceAfter: number,
     public readonly toBalanceAfter: number,
     public readonly createdAt: Date,
