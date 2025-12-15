@@ -244,3 +244,47 @@ Ignatius Francis
 🐙 GitHub: https://github.com/IgnatiusFrancis
 
 ```
+
+## Nice-to-Have Features (Planned)
+
+1.  Docker Integration:
+    . Containerization for easy deployment
+    . Docker Compose for service orchestration
+    . Scaling Solutions
+
+2.  Redis implementation for caching
+    . Bull Queueimplementation for automated email sending to customers
+    . Horizontal scaling capabilities
+
+<!-- ## Development Challenges
+
+1.  Time Management:
+    . Met tight deadlines during festive period
+    . Balanced feature implementation with testing requirements
+
+2.  Technical Challenges:
+    . Implementing real-time WebSocket communication
+    . Ensuring proper state management across the system
+    . Maintaining test coverage while adding features -->
+
+## Contributing
+
+To contribute to this project, please follow these guidelines:
+
+- Fork the repository.
+- Create a feature branch (git checkout -b feature/your-feature).
+- Commit your changes (git commit -m 'Add new feature').
+- Push to the branch (git push origin feature/your-feature).
+- Open a pull request.
+
+## Contact
+
+For any inquiries, please reach out to:
+
+- **Name: Ignatius Francis**
+- **Email: obiignatiusfrancis@outlook.com**
+- **GitHub: IgnatiusFrancis**
+
+```
+
+```
