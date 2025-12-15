@@ -26,4 +26,13 @@ export class InMemoryTransactionRepository implements ITransactionRepository {
   async findByIdempotencyKey(key: string): Promise<Transaction | null> {
     return this.idempotencyIndex.get(key) || null;
   }
+
+  async findByReference(reference: string): Promise<Transaction | null> {
+    for (const txn of this.transactions.values()) {
+      if (txn.reference === reference) {
+        return txn;
+      }
+    }
+    return null;
+  }
 }

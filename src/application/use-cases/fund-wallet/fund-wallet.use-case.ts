@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Injectable, Inject } from '@nestjs/common';
 import {
   WalletNotFoundException,
@@ -39,8 +40,18 @@ export class FundWalletUseCase {
           existingTxn.walletId,
           existingTxn.amount,
           existingTxn.balanceAfter,
+          existingTxn.reference,
           existingTxn.createdAt,
         );
+      }
+    }
+
+    if (dto.reference) {
+      const existingReferenceTxn = await this.txnRepo.findByReference(
+        dto.reference,
+      );
+      if (existingReferenceTxn) {
+        throw new Error(`Reference '${dto.reference}' has already been used`);
       }
     }
 
@@ -48,9 +59,10 @@ export class FundWalletUseCase {
     if (!wallet) {
       throw new WalletNotFoundException(dto.walletId);
     }
-
+    // Generate a unique reference if not provided
+    const transferReference = dto.reference ?? uuidv4();
     const money = new Money(dto.amount, wallet.balance.currency);
-    const txn = wallet.credit(money, dto.idempotencyKey, dto.reference);
+    const txn = wallet.credit(money, dto.idempotencyKey, transferReference);
 
     await this.walletRepo.save(wallet);
     await this.txnRepo.save(txn);
@@ -60,6 +72,7 @@ export class FundWalletUseCase {
       txn.walletId,
       txn.amount,
       txn.balanceAfter,
+      transferReference,
       txn.createdAt,
     );
   }

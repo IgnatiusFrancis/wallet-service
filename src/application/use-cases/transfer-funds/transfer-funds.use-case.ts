@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Injectable, Inject } from '@nestjs/common';
 import {
   WalletNotFoundException,
@@ -34,6 +35,18 @@ export class TransferFundsUseCase {
     if (dto.fromWalletId === dto.toWalletId) {
       throw new Error('Cannot transfer to the same wallet');
     }
+
+    if (dto.reference) {
+      const existingReferenceTxn = await this.txnRepo.findByReference(
+        dto.reference,
+      );
+      if (existingReferenceTxn) {
+        throw new Error(`Reference '${dto.reference}' has already been used`);
+      }
+    }
+
+    // Generate a unique reference if not provided
+    const transferReference = dto.reference ?? uuidv4();
 
     // Check idempotency
     if (dto.idempotencyKey) {
@@ -97,12 +110,16 @@ export class TransferFundsUseCase {
     const debitTxn = fromWallet.debit(
       transferAmount,
       dto.idempotencyKey,
-      dto.reference,
+      transferReference,
       dto.toWalletId,
     );
 
     // Credit to receiver
-    const creditTxn = toWallet.credit(transferAmount, undefined, dto.reference);
+    const creditTxn = toWallet.credit(
+      transferAmount,
+      undefined,
+      transferReference,
+    );
 
     // Save both wallets and transactions
     await Promise.all([

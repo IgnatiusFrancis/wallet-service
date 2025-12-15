@@ -73,28 +73,163 @@ This ensures the business logic is framework-agnostic, highly testable, and easy
 
 ## Project Structure
 
-src/
-├── application/
-│ └── use-cases/
-├── domain/
-│ ├── entities/
-│ ├── value-objects/
-│ └── exceptions/
-├── infrastructure/
-│ ├── http/
-│ └── persistence/
-├── app.module.ts
-└── main.ts
+```
+wallet-service/
+├── src/
+│   ├── application/
+│   │   └── use-cases/
+│   │       ├── create-wallet/
+│   │       ├── fund-wallet/
+│   │       ├── transfer-funds/
+│   │       └── get-wallet/
+│   ├── domain/
+│   │   ├── entities/
+│   │   │   ├── wallet.entity.ts
+│   │   │   └── transaction.entity.ts
+│   │   ├── value-objects/
+│   │   │   ├── money.vo.ts
+│   │   │   └── wallet-id.vo.ts
+│   │   ├── repositories/
+│   │   └── exceptions/
+│   ├── infrastructure/
+│   │   ├── http/
+│   │   │   ├── controllers/
+│   │   │   └── filters/
+│   │   └── persistence/
+│   │       └── in-memory/
+│   ├── app.module.ts
+│   └── main.ts
+├── test/
+│   ├── unit/
+│   ├── integration/
+│   └── e2e/
+├── package.json
+├── tsconfig.json
+└── README.md
+```
 
-test/
-├── unit/
-└── integration/
+## Project Structure
+
+<details>
+<summary>📁 Click to expand project structure</summary>
+`````
+wallet-service/
+├── src/
+│   ├── application/
+│   │   └── use-cases/
+│   │       ├── create-wallet/
+│   │       │   ├── create-wallet.use-case.ts
+│   │       │   └── create-wallet.dto.ts
+│   │       ├── fund-wallet/
+│   │       │   ├── fund-wallet.use-case.ts
+│   │       │   └── fund-wallet.dto.ts
+│   │       ├── transfer-funds/
+│   │       │   ├── transfer-funds.use-case.ts
+│   │       │   └── transfer-funds.dto.ts
+│   │       └── get-wallet/
+│   │           └── get-wallet.use-case.ts
+│   ├── domain/
+│   │   ├── entities/
+│   │   │   ├── wallet.entity.ts
+│   │   │   ├── wallet.entity.spec.ts
+│   │   │   ├── transaction.entity.ts
+│   │   │   └── transaction.entity.spec.ts
+│   │   ├── value-objects/
+│   │   │   ├── money.vo.ts
+│   │   │   ├── money.vo.spec.ts
+│   │   │   ├── wallet-id.vo.ts
+│   │   │   └── wallet-id.vo.spec.ts
+│   │   ├── repositories/
+│   │   │   ├── wallet.repository.interface.ts
+│   │   │   └── transaction.repository.interface.ts
+│   │   └── exceptions/
+│   │       └── domain.exceptions.ts
+│   ├── infrastructure/
+│   │   ├── http/
+│   │   │   ├── controllers/
+│   │   │   │   └── wallet.controller.ts
+│   │   │   └── filters/
+│   │   │       └── domain-exception.filter.ts
+│   │   └── persistence/
+│   │       └── in-memory/
+│   │           ├── in-memory-wallet.repository.ts
+│   │           └── in-memory-transaction.repository.ts
+│   ├── app.module.ts
+│   └── main.ts
+├── test/
+│   ├── unit/
+│   │   ├── create-wallet.use-case.spec.ts
+│   │   ├── fund-wallet.use-case.spec.ts
+│   │   ├── transfer-funds.use-case.spec.ts
+│   │   └── get-wallet.use-case.spec.ts
+│   ├── integration/
+│   │   └── wallet-flow.integration.test.ts
+│   └── e2e/
+│       └── wallet.e2e-spec.ts
+├── package.json
+├── tsconfig.json
+├── jest.config.js
+└── README.md
+`````
+
+</details>
+
+## 📁 Project Structure
+
+```
+wallet-service/
+├── src/
+│   ├── application/              # Application layer - Use cases
+│   │   └── use-cases/
+│   │       ├── create-wallet/
+│   │       ├── fund-wallet/
+│   │       ├── transfer-funds/
+│   │       └── get-wallet/
+│   │
+│   ├── domain/                   # Domain layer - Business logic
+│   │   ├── entities/
+│   │   │   ├── wallet.entity.ts
+│   │   │   └── transaction.entity.ts
+│   │   ├── value-objects/
+│   │   │   ├── money.vo.ts
+│   │   │   └── wallet-id.vo.ts
+│   │   ├── repositories/
+│   │   │   ├── wallet.repository.interface.ts
+│   │   │   └── transaction.repository.interface.ts
+│   │   └── exceptions/
+│   │       └── domain.exceptions.ts
+│   │
+│   ├── infrastructure/           # Infrastructure layer
+│   │   ├── http/
+│   │   │   ├── controllers/
+│   │   │   └── filters/
+│   │   └── persistence/
+│   │       └── in-memory/
+│   │
+│   ├── app.module.ts
+│   └── main.ts
+│
+├── test/
+│   ├── unit/                     # Unit tests
+│   ├── integration/              # Integration tests
+│   └── e2e/                      # End-to-end tests
+│
+├── package.json
+├── tsconfig.json
+└── README.md
+```
 
 ## Prerequisites
 
 - Node.js (v18 or higher recommended)
 - npm
 - Basic understanding of NestJS and TypeScript
+
+## QUICK START
+
+Live backend url: For a quick start, the backend was deployed to render: [API Url](https://wallet-service-7rs1.onrender.com)
+N/B: Backend live url spin down with inactivity, which can delay requests by 50 seconds or more.
+Postman Collection: Link to Postman Collection [API Documentation](https://www.postman.com/planetary-trinity-671710/wallet/overview)
 
 ## Installation
 
@@ -106,13 +241,10 @@ cd wallet-service
 Install dependencies:
 npm install
 
-Configuration
+## Configuration
+
 Create a .env file in the root directory if needed (optional for local testing):
 PORT=3000
-NODE_ENV=development
-
-Usage
-Starting the Server
 
 # Development mode
 

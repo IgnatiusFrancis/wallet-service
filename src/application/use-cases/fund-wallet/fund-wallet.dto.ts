@@ -23,6 +23,7 @@ export class FundWalletResultDto {
     public readonly walletId: string,
     public readonly amount: number,
     public readonly balanceAfter: number,
+    public readonly reference: string | undefined,
     public readonly createdAt: Date,
   ) {}
 }

@@ -2,7 +2,29 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getHello(): {
+    status: string;
+    message: string;
+    data: any;
+    timestamp: string;
+  } {
+    return {
+      status: 'success',
+      message: 'Welcome to Wallet Service 🚀',
+      data: {
+        title: 'Wallet Service – Manage Your Finances Seamlessly',
+        description:
+          'Wallet Service provides a robust platform to manage wallets, perform fund transfers, track transactions, and handle multi-currency balances efficiently.',
+        features: [
+          '💳 Wallet Management – Create, view, and manage wallets with multiple currencies',
+          '🔄 Fund Transfers – Transfer money securely between wallets with idempotency protection',
+          '📈 Transaction Tracking – Keep a full history of credits, debits, and transfers',
+          '🛡️ Exception Handling – Prevent insufficient funds, currency mismatches, and invalid operations',
+          '✅ High Test Coverage – Fully tested modules with unit and integration tests',
+        ],
+        getStarted: 'https://your-wallet-service.docs/api',
+      },
+      timestamp: new Date().toISOString(),
+    };
   }
 }
