@@ -71,51 +71,12 @@ The system follows Domain-Driven Design (DDD) with clear separation of concerns:
 
 This ensures the business logic is framework-agnostic, highly testable, and easy to evolve.
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 wallet-service/
 ├── src/
-│   ├── application/
-│   │   └── use-cases/
-│   │       ├── create-wallet/
-│   │       ├── fund-wallet/
-│   │       ├── transfer-funds/
-│   │       └── get-wallet/
-│   ├── domain/
-│   │   ├── entities/
-│   │   │   ├── wallet.entity.ts
-│   │   │   └── transaction.entity.ts
-│   │   ├── value-objects/
-│   │   │   ├── money.vo.ts
-│   │   │   └── wallet-id.vo.ts
-│   │   ├── repositories/
-│   │   └── exceptions/
-│   ├── infrastructure/
-│   │   ├── http/
-│   │   │   ├── controllers/
-│   │   │   └── filters/
-│   │   └── persistence/
-│   │       └── in-memory/
-│   ├── app.module.ts
-│   └── main.ts
-├── test/
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-├── package.json
-├── tsconfig.json
-└── README.md
-```
-
-## Project Structure
-
-<details>
-<summary>📁 Click to expand project structure</summary>
-`````
-wallet-service/
-├── src/
-│   ├── application/
+│   ├── application/                      # Application layer - Use cases
 │   │   └── use-cases/
 │   │       ├── create-wallet/
 │   │       │   ├── create-wallet.use-case.ts
@@ -128,7 +89,8 @@ wallet-service/
 │   │       │   └── transfer-funds.dto.ts
 │   │       └── get-wallet/
 │   │           └── get-wallet.use-case.ts
-│   ├── domain/
+│   │
+│   ├── domain/                           # Domain layer - Business logic
 │   │   ├── entities/
 │   │   │   ├── wallet.entity.ts
 │   │   │   ├── wallet.entity.spec.ts
@@ -144,7 +106,8 @@ wallet-service/
 │   │   │   └── transaction.repository.interface.ts
 │   │   └── exceptions/
 │   │       └── domain.exceptions.ts
-│   ├── infrastructure/
+│   │
+│   ├── infrastructure/                   # Infrastructure layer
 │   │   ├── http/
 │   │   │   ├── controllers/
 │   │   │   │   └── wallet.controller.ts
@@ -154,9 +117,11 @@ wallet-service/
 │   │       └── in-memory/
 │   │           ├── in-memory-wallet.repository.ts
 │   │           └── in-memory-transaction.repository.ts
+│   │
 │   ├── app.module.ts
 │   └── main.ts
-├── test/
+│
+├── test/                                 # Test files
 │   ├── unit/
 │   │   ├── create-wallet.use-case.spec.ts
 │   │   ├── fund-wallet.use-case.spec.ts
@@ -164,56 +129,17 @@ wallet-service/
 │   │   └── get-wallet.use-case.spec.ts
 │   ├── integration/
 │   │   └── wallet-flow.integration.test.ts
-│   └── e2e/
-│       └── wallet.e2e-spec.ts
-├── package.json
-├── tsconfig.json
-├── jest.config.js
-└── README.md
-`````
-
-</details>
-
-## 📁 Project Structure
-
-```
-wallet-service/
-├── src/
-│   ├── application/              # Application layer - Use cases
-│   │   └── use-cases/
-│   │       ├── create-wallet/
-│   │       ├── fund-wallet/
-│   │       ├── transfer-funds/
-│   │       └── get-wallet/
-│   │
-│   ├── domain/                   # Domain layer - Business logic
-│   │   ├── entities/
-│   │   │   ├── wallet.entity.ts
-│   │   │   └── transaction.entity.ts
-│   │   ├── value-objects/
-│   │   │   ├── money.vo.ts
-│   │   │   └── wallet-id.vo.ts
-│   │   ├── repositories/
-│   │   │   ├── wallet.repository.interface.ts
-│   │   │   └── transaction.repository.interface.ts
-│   │   └── exceptions/
-│   │       └── domain.exceptions.ts
-│   │
-│   ├── infrastructure/           # Infrastructure layer
-│   │   ├── http/
-│   │   │   ├── controllers/
-│   │   │   └── filters/
-│   │   └── persistence/
-│   │       └── in-memory/
-│   │
-│   ├── app.module.ts
-│   └── main.ts
 │
-├── test/
-│   ├── unit/                     # Unit tests
-│   ├── integration/              # Integration tests
-│   └── e2e/                      # End-to-end tests
 │
+│
+├── coverage/                             # Test coverage reports (generated)
+├── dist/
+├── node_modules/
+│
+├── .gitignore
+├── jest.config.js                        # Jest configuration
+├
+├
 ├── package.json
 ├── tsconfig.json
 └── README.md

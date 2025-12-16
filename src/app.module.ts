@@ -19,6 +19,7 @@ import { InMemoryWalletRepository } from '@infrastructure/persistence/wallet.rep
 import { TRANSACTION_REPOSITORY } from '@domain/repositories/transaction.interface';
 import { InMemoryTransactionRepository } from '@infrastructure/persistence/transaction.repository';
 import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   controllers: [WalletController, AppController],
@@ -28,6 +29,7 @@ import { AppController } from './app.controller';
     FundWalletUseCase,
     TransferFundsUseCase,
     GetWalletUseCase,
+    AppService,
 
     // Repositories
     {
