@@ -16,7 +16,7 @@ export class AppService {
         description:
           'Wallet Service provides a robust platform to manage wallets, perform fund transfers and track transactions efficiently.',
         features: [
-          '💳 Wallet Management – Create, view, and manage wallets with multiple currencies',
+          '💳 Wallet Management – Create, view, and manage wallets with currency',
           '🔄 Fund Transfers – Transfer money securely between wallets with idempotency protection',
           '📈 Transaction Tracking – Keep a full history of credits, debits, and transfers',
           '🛡️ Exception Handling – Prevent insufficient funds, currency mismatches, and invalid operations',

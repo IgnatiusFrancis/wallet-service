@@ -41,15 +41,12 @@ describe('GetWalletUseCase', () => {
 
   describe('execute', () => {
     it('should return wallet details with empty transaction history', async () => {
-      // Arrange
       const wallet = Wallet.create('USD');
       mockWalletRepo.findById.mockResolvedValue(wallet);
       mockTxnRepo.findByWalletId.mockResolvedValue([]);
 
-      // Act
       const result = await useCase.execute(wallet.id.value);
 
-      // Assert
       expect(result.id).toBe(wallet.id.value);
       expect(result.currency).toBe('USD');
       expect(result.balance).toBe(0);
@@ -59,7 +56,6 @@ describe('GetWalletUseCase', () => {
     });
 
     it('should return wallet with transaction history', async () => {
-      // Arrange
       const wallet = Wallet.create('USD');
       wallet.credit(new Money(500, 'USD'), undefined, 'Initial deposit');
       wallet.credit(new Money(300, 'USD'), undefined, 'Second deposit');
@@ -86,10 +82,8 @@ describe('GetWalletUseCase', () => {
       mockWalletRepo.findById.mockResolvedValue(wallet);
       mockTxnRepo.findByWalletId.mockResolvedValue(transactions);
 
-      // Act
       const result = await useCase.execute(wallet.id.value);
 
-      // Assert
       expect(result.id).toBe(wallet.id.value);
       expect(result.balance).toBe(800);
       expect(result.transactions).toHaveLength(2);
@@ -100,10 +94,8 @@ describe('GetWalletUseCase', () => {
     });
 
     it('should throw WalletNotFoundException when wallet does not exist', async () => {
-      // Arrange
       mockWalletRepo.findById.mockResolvedValue(null);
 
-      // Act & Assert
       await expect(useCase.execute('non-existent-id')).rejects.toThrow(
         WalletNotFoundException,
       );
@@ -113,7 +105,6 @@ describe('GetWalletUseCase', () => {
     });
 
     it('should return correct transaction types', async () => {
-      // Arrange
       const wallet = Wallet.create('USD');
       wallet.credit(new Money(1000, 'USD'));
 
@@ -138,17 +129,14 @@ describe('GetWalletUseCase', () => {
       mockWalletRepo.findById.mockResolvedValue(wallet);
       mockTxnRepo.findByWalletId.mockResolvedValue(transactions);
 
-      // Act
       const result = await useCase.execute(wallet.id.value);
 
-      // Assert
       expect(result.transactions[0].type).toBe('CREDIT');
       expect(result.transactions[1].type).toBe('TRANSFER_OUT');
       expect(result.transactions[1].relatedWalletId).toBe('wallet-2');
     });
 
     it('should include transaction timestamps', async () => {
-      // Arrange
       const wallet = Wallet.create('USD');
       const now = new Date();
 
@@ -163,10 +151,8 @@ describe('GetWalletUseCase', () => {
       mockWalletRepo.findById.mockResolvedValue(wallet);
       mockTxnRepo.findByWalletId.mockResolvedValue([transaction]);
 
-      // Act
       const result = await useCase.execute(wallet.id.value);
 
-      // Assert
       expect(result.transactions[0].createdAt).toBeInstanceOf(Date);
       expect(result.transactions[0].createdAt?.getTime()).toBeLessThanOrEqual(
         Date.now(),
@@ -174,7 +160,6 @@ describe('GetWalletUseCase', () => {
     });
 
     it('should return balance after transactions', async () => {
-      // Arrange
       const wallet = Wallet.create('USD');
       wallet.credit(new Money(1000, 'USD'));
       wallet.debit(new Money(400, 'USD'));
@@ -199,17 +184,14 @@ describe('GetWalletUseCase', () => {
       mockWalletRepo.findById.mockResolvedValue(wallet);
       mockTxnRepo.findByWalletId.mockResolvedValue(transactions);
 
-      // Act
       const result = await useCase.execute(wallet.id.value);
 
-      // Assert
       expect(result.balance).toBe(600);
       expect(result.transactions[0].balanceAfter).toBe(1000);
       expect(result.transactions[1].balanceAfter).toBe(600);
     });
 
     it('should handle transactions with references', async () => {
-      // Arrange
       const wallet = Wallet.create('USD');
 
       const transaction = Transaction.create({
@@ -224,15 +206,12 @@ describe('GetWalletUseCase', () => {
       mockWalletRepo.findById.mockResolvedValue(wallet);
       mockTxnRepo.findByWalletId.mockResolvedValue([transaction]);
 
-      // Act
       const result = await useCase.execute(wallet.id.value);
 
-      // Assert
       expect(result.transactions[0].reference).toBe('Payment from client');
     });
 
     it('should handle transactions without references', async () => {
-      // Arrange
       const wallet = Wallet.create('USD');
 
       const transaction = Transaction.create({
@@ -246,15 +225,12 @@ describe('GetWalletUseCase', () => {
       mockWalletRepo.findById.mockResolvedValue(wallet);
       mockTxnRepo.findByWalletId.mockResolvedValue([transaction]);
 
-      // Act
       const result = await useCase.execute(wallet.id.value);
 
-      // Assert
       expect(result.transactions[0].reference).toBeUndefined();
     });
 
     it('should include transaction IDs', async () => {
-      // Arrange
       const wallet = Wallet.create('USD');
 
       const transaction = Transaction.create({
@@ -268,17 +244,14 @@ describe('GetWalletUseCase', () => {
       mockWalletRepo.findById.mockResolvedValue(wallet);
       mockTxnRepo.findByWalletId.mockResolvedValue([transaction]);
 
-      // Act
       const result = await useCase.execute(wallet.id.value);
 
-      // Assert
       expect(result.transactions[0].id).toBeDefined();
       expect(typeof result.transactions[0].id).toBe('string');
       expect(result.transactions[0].id.length).toBeGreaterThan(0);
     });
 
     it('should handle multiple transaction types in history', async () => {
-      // Arrange
       const wallet = Wallet.create('USD');
 
       const transactions = [
@@ -316,10 +289,8 @@ describe('GetWalletUseCase', () => {
       mockWalletRepo.findById.mockResolvedValue(wallet);
       mockTxnRepo.findByWalletId.mockResolvedValue(transactions);
 
-      // Act
       const result = await useCase.execute(wallet.id.value);
 
-      // Assert
       expect(result.transactions).toHaveLength(4);
       expect(result.transactions[0].type).toBe('CREDIT');
       expect(result.transactions[1].type).toBe('DEBIT');
@@ -328,11 +299,9 @@ describe('GetWalletUseCase', () => {
     });
 
     it('should propagate repository errors', async () => {
-      // Arrange
       const error = new Error('Database connection failed');
       mockWalletRepo.findById.mockRejectedValue(error);
 
-      // Act & Assert
       await expect(useCase.execute('wallet-id')).rejects.toThrow(
         'Database connection failed',
       );

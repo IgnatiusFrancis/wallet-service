@@ -117,9 +117,7 @@ describe('Wallet Entity', () => {
 
       try {
         wallet.debit(new Money(100, 'USD'));
-      } catch (e) {
-        // Expected
-      }
+      } catch (e) {}
 
       expect(wallet.balance.amount).toBe(50);
     });
@@ -157,8 +155,8 @@ describe('Wallet Entity', () => {
       const txns1 = wallet.transactions;
       const txns2 = wallet.transactions;
 
-      expect(txns1).not.toBe(txns2); // Different array instances
-      expect(txns1).toEqual(txns2); // Same content
+      expect(txns1).not.toBe(txns2);
+      expect(txns1).toEqual(txns2);
     });
 
     it('should not allow external modification of transactions', () => {

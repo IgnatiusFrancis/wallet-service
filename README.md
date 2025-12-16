@@ -215,9 +215,39 @@ CI Pipeline Features
 - Runs all tests
 - Fails the build if any test fails
 
-## Scaling in Production
+## Production Scalability & Testing Strategy
 
 If deployed to production, the system would scale as follows:
+
+### Comprehensive Test Coverage
+
+Our test suite simulates real-world production scenarios to ensure the system scales reliably:
+
+#### ✅ **Concurrency & Race Condition Testing**
+
+- **Concurrent wallet operations**: Tests verify that multiple simultaneous deposits to the same wallet maintain data consistency
+- **Concurrent transfers**: Validated that parallel transfers from one wallet to multiple destinations execute correctly without race conditions
+- **Lock ordering**: Tests confirm deadlock prevention through sorted lock acquisition, critical for high-throughput environments
+- **Stress testing**: Simulated 100+ transactions per wallet to verify performance under heavy load
+
+````typescript
+
+#### ✅ **Idempotency Testing**
+- **Duplicate request handling**: Tests verify identical requests with same idempotency keys return cached results
+- **Network retry scenarios**: Simulated client retries to ensure no duplicate charges
+- **Cross-operation idempotency**: Validated for both funding and transfer operations
+```typescript
+// Idempotency prevents duplicate charges even on retries
+const result1 = await fundWallet({ amount: 500, idempotencyKey: 'key-123' });
+const result2 = await fundWallet({ amount: 500, idempotencyKey: 'key-123' });
+````
+
+#### ✅ **Data Integrity Testing**
+
+- **Transaction ordering**: Verified transactions always return in correct chronological order
+- **Balance consistency**: Tests confirm balance always matches sum of all transactions
+- **Atomic operations**: Validated that failed operations leave no partial state
+- **Isolation tests**: Confirmed wallet modifications don't affect other wallets
 
 ## Horizontal Scalability
 
@@ -229,15 +259,6 @@ If deployed to production, the system would scale as follows:
 - Use transactional database (PostgreSQL/MySQL)
 - Wallet row-level locking for transfers
 - Proper indexing on wallet IDs and transaction timestamps
-
-## Concurrency Safety
-
-- findMultipleByIdsWithLock ensures consistent balance updates
-- Prevents race conditions during concurrent transfers
-
-## Idempotency
-
-- Protects against duplicate requests (network retries, client errors)
 
 ## Nice-to-Have Features (Planned)
 
@@ -285,6 +306,10 @@ For any inquiries, please reach out to:
 - **Name: Ignatius Francis**
 - **Email: obiignatiusfrancis@outlook.com**
 - **GitHub: IgnatiusFrancis**
+
+```
+
+```
 
 ```
 
