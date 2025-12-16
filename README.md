@@ -153,9 +153,11 @@ wallet-service/
 
 ## QUICK START
 
-Live backend url: For a quick start, the backend was deployed to render: [API Url](https://wallet-service-7rs1.onrender.com)
-N/B: Backend live url spin down with inactivity, which can delay requests by 50 seconds or more.
-Postman Collection: Link to Postman Collection [API Documentation](https://www.postman.com/planetary-trinity-671710/wallet/overview)
+- Live backend url: For a quick start, the backend was deployed to render: [API Url](https://wallet-service-7rs1.onrender.com).
+
+- N/B: Backend live url spin down with inactivity, which can delay requests by 50 seconds or more.
+
+- Postman Collection: Link to Postman Collection [API Documentation](https://www.postman.com/planetary-trinity-671710/wallet/overview)
 
 ## Installation
 
