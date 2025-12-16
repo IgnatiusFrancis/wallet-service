@@ -41,6 +41,7 @@ export class FundWalletUseCase {
           existingTxn.amount,
           existingTxn.balanceAfter,
           existingTxn.reference,
+          existingTxn.idempotencyKey,
           existingTxn.createdAt,
         );
       }
@@ -73,6 +74,7 @@ export class FundWalletUseCase {
       txn.amount,
       txn.balanceAfter,
       transferReference,
+      txn.idempotencyKey,
       txn.createdAt,
     );
   }

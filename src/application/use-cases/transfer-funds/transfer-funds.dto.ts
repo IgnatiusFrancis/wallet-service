@@ -31,6 +31,8 @@ export class TransferFundsResultDto {
     public readonly toWalletId: string,
     public readonly amount: number,
     public readonly description: string,
+    public readonly reference: string | undefined,
+    public readonly idempotencyKey: string | undefined,
     public readonly fromBalanceAfter: number,
     public readonly toBalanceAfter: number,
     public readonly createdAt: Date,

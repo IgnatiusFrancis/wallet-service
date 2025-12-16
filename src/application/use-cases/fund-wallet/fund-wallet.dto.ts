@@ -24,6 +24,7 @@ export class FundWalletResultDto {
     public readonly amount: number,
     public readonly balanceAfter: number,
     public readonly reference: string | undefined,
+    public readonly idempotencyKey: string | undefined,
     public readonly createdAt: Date,
   ) {}
 }
